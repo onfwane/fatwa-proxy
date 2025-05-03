@@ -4,7 +4,7 @@ export default async function handler(req, res) {
   }
 
   const { question } = req.body;
-  const API_KEY = "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"; // استبدله بمفتاحك من OpenRouter
+  const API_KEY = "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"; // استبدله بمفتاحك من OpenRouter
 
   try {
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
