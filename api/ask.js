@@ -17,7 +17,7 @@ export default async function handler(req, res) {
         messages: [
           {
             role: "system",
-            content: " أنت مساعد شرعي ذكي. أجب عن الأسئلة الشرعية فقط باللغة العربية الفصحى بدقة ووضوح، استنادًا للقرآن الكريم والسنة النبوية وآراء العلماء الموثوقين"
+            content: "أنت مساعد شرعي ذكي"
           },
           {
             role: "user",
