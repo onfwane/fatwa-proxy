@@ -1,8 +1,9 @@
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).send("Only POST allowed");
 
-  const { question } = req.body;
-  const API_KEY = process.env.OPENROUTER_API_KEY;
+  const { messages } = req.body;
+
+  const API_KEY = process.env.OPENROUTER_API_KEY; // استخدم متغير بيئة لحماية المفتاح
 
   try {
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -12,17 +13,16 @@ export default async function handler(req, res) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "qwen/qwen1.5-0.5b-chat:free",
-        messages: [
-          { role: "system", content: "أجب عن الأسئلة الشرعية باختصار ودقة، مستندًا إلى القرآن والسنة وآراء العلماء المعتبرين." },
-          { role: "user", content: question }
-        ]
+        model: "qwen/qwen1.5-0.5b-chat:free", // نموذج جيد ومجاني ويدعم العربية
+        messages
       })
     });
 
     const data = await response.json();
-    res.status(200).json({ result: data.choices?.[0]?.message?.content || "لا يوجد رد." });
+    const reply = data.choices?.[0]?.message?.content || "لا يوجد رد.";
+    res.status(200).json({ result: reply });
   } catch (e) {
-    res.status(500).json({ result: "خطأ في الاتصال بالخادم أو في إعدادات النموذج." });
+    console.error("خطأ في الاتصال:", e);
+    res.status(500).json({ result: "حدث خطأ أثناء الاتصال بالخادم." });
   }
 }
