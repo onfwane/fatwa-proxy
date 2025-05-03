@@ -1,8 +1,10 @@
 export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).send("Only POST allowed");
+  if (req.method !== "POST") {
+    return res.status(405).send("Only POST allowed");
+  }
 
   const { question } = req.body;
-  const API_KEY = "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";
+  const API_KEY = "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"; // غيّره إذا احتجت
 
   try {
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -14,15 +16,24 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: "mistralai/mistral-nemo:free",
         messages: [
-          { role: "system", content: "أجب عن الأسئلة الشرعية بدقة، استنادًا للقرآن والسنة وآراء العلماء المعتبرين." },
-          { role: "user", content: question }
+          {
+            role: "system",
+            content: "أجب عن الأسئلة الشرعية بدقة، استنادًا للقرآن والسنة وآراء العلماء المعتبرين."
+          },
+          {
+            role: "user",
+            content: question
+          }
         ]
       })
     });
 
     const data = await response.json();
-    res.status(200).json({ result: data.choices?.[0]?.message?.content || "لا يوجد رد مناسب." });
-  } catch (e) {
-    res.status(500).json({ result: "حدث خطأ في الاتصال بالخادم أو معالجة البيانات." });
+    const reply = data.choices?.[0]?.message?.content || "لم يتم الحصول على رد مناسب.";
+    res.status(200).json({ result: reply });
+
+  } catch (error) {
+    console.error("API Error:", error);
+    res.status(500).json({ result: "حدث خطأ أثناء الاتصال بـ OpenRouter" });
   }
 }
