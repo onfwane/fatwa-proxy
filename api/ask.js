@@ -12,11 +12,12 @@ export default async function handler(req, res) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "mistralai/mistral-nemo:free",
+        model: "microsoft/phi-4-reasoning-plus:free",
+
         messages: [
           {
             role: "system",
-            content: "  , تحدث بالعربية فقط في الرد لا تحدث الا بالعربية بدون رد بالانجلزيية, عند السؤال عن من انت او ما اسمك قل انا وسام"
+            content: " أنت مساعد شرعي ذكي. أجب عن الأسئلة الشرعية فقط باللغة العربية الفصحى بدقة ووضوح، استنادًا للقرآن الكريم والسنة النبوية وآراء العلماء الموثوقين"
           },
           {
             role: "user",
