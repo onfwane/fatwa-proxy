@@ -1,96 +1,247 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مساعد الفتاوى الذكي</title>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <title>شات الفتاوى الإسلامية</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet" />
   <style>
+    /* --- تم إدراج كل CSS كما أرسلته بدون تغيير --- */
     body {
-      font-family: 'Amiri', serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(to bottom, #1e3c72, #2a5298);
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+        font-family: "Amiri", serif;
+        background: linear-gradient(to bottom, #1e3c72, #2a5298);
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
     }
-    .chat-box {
-      background: #111;
-      padding: 20px;
-      border-radius: 15px;
-      width: 90%;
-      max-width: 600px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+
+    body.dark-mode {
+        background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+        color: white;
     }
-    h2 {
-      text-align: center;
-      margin-bottom: 15px;
-      color: #f9c74f;
+
+    .stars {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
     }
-    textarea {
-      width: 100%;
-      height: 80px;
-      border: none;
-      border-radius: 10px;
-      padding: 10px;
-      font-family: 'Amiri', serif;
-      font-size: 18px;
-      resize: none;
+
+    .stars span {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: white;
+        opacity: 0.8;
+        animation: moveStars 5s linear infinite;
     }
-    button {
-      width: 100%;
-      background: #f9c74f;
-      color: #000;
-      font-size: 18px;
-      border: none;
-      border-radius: 10px;
-      padding: 10px;
-      margin-top: 10px;
-      cursor: pointer;
+
+    @keyframes moveStars {
+        0% { transform: translateY(100vh); opacity: 0; }
+        50% { opacity: 1; }
+        100% { transform: translateY(-10vh); opacity: 0; }
     }
-    pre {
-      background: #222;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 15px;
-      font-family: 'Amiri', serif;
-      font-size: 16px;
-      white-space: pre-wrap;
+
+    .chat-container {
+        width: 360px;
+        height: 580px;
+        margin: 50px auto;
+        padding: 20px;
+        border-radius: 25px;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+        position: relative;
+    }
+
+    body.dark-mode .chat-container {
+        background: rgba(44, 44, 44, 0.9);
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .icon-container {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .icon {
+        width: 80px;
+        height: 80px;
+        background: radial-gradient(circle at 50% 50%, #ffcc00, #ff9f00);
+        border-radius: 50%;
+        box-shadow: 0px 0px 50px rgba(255, 204, 0, 0.9);
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        animation: floatingMoon 4s infinite ease-in-out alternate;
+    }
+
+    @keyframes floatingMoon {
+        from { transform: translate(-50%, -55%); }
+        to { transform: translate(-50%, -45%); }
+    }
+
+    .chat-output {
+        width: 90%;
+        margin: 10px auto;
+        text-align: left;
+        font-size: 16px;
+        max-height: 250px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .chat-output::-webkit-scrollbar {
+        display: none;
+    }
+
+    .chat-output p {
+        background: rgba(240, 240, 240, 0.9);
+        padding: 10px;
+        border-radius: 15px;
+        display: inline-block;
+        max-width: 80%;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .user-message {
+        background: rgba(173, 216, 230, 0.9);
+        align-self: flex-end;
+    }
+
+    .bot-message {
+        background: rgba(60, 60, 60, 0.9);
+        align-self: flex-start;
+        color: white;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .input-container {
+        display: flex;
+        align-items: center;
+        padding-top: 10px;
+    }
+
+    .search-box {
+        flex-grow: 1;
+        padding: 12px;
+        border: none;
+        border-radius: 20px;
+        font-size: 16px;
+        text-align: center;
+        background: #f2f2f2;
+        outline: none;
+        transition: all 0.3s ease-in-out;
+    }
+
+    body.dark-mode .search-box {
+        background: #444;
+        color: white;
+    }
+
+    .toggle-theme {
+        font-size: 18px;
+        border: none;
+        background: none;
+        cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div class="chat-box">
-    <h2>🏛️ شات الفتاوى الإسلامية 📄</h2>
-    <textarea id="question" placeholder="اكتب سؤالك هنا..."></textarea>
-    <button onclick="askFatwa()">استفسر الآن</button>
-    <pre id="response">لا يوجد رد.</pre>
+
+<div class="chat-container">
+  <div class="header">
+    <h2>🕌 شات الفتاوى الإسلامية 📜</h2>
+    <button class="toggle-theme" onclick="toggleTheme()">🌙</button>
   </div>
-  <script>
-    async function askFatwa() {
-      const input = document.getElementById("question").value.trim();
-      const responseBox = document.getElementById("response");
 
-      if (!input) return;
+  <div class="stars"></div>
+  <div class="icon-container"><div class="icon" id="moon"></div></div>
+  <div id="chatOutput" class="chat-output"></div>
+  <div class="input-container">
+    <input type="text" id="chatInput" class="search-box" placeholder="✍️ اكتب سؤالك هنا..." onkeypress="handleKeyPress(event)">
+  </div>
+</div>
 
-      responseBox.innerText = "... جاري الاستعلام";
+<script>
+function toggleTheme() {
+  document.body.classList.toggle("dark-mode");
+  localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
+}
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark-mode");
+}
 
-      try {
-        const res = await fetch("/api/ask", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ question: input })
-        });
+function appendMessage(message, type) {
+  const output = document.getElementById("chatOutput");
+  const p = document.createElement("p");
+  p.className = type === "user" ? "user-message" : "bot-message";
+  p.textContent = message;
+  output.appendChild(p);
+  output.scrollTop = output.scrollHeight;
+}
 
-        const data = await res.json();
-        responseBox.innerText = data.result || "لا يوجد رد.";
-      } catch (err) {
-        responseBox.innerText = "حدث خطأ في الاتصال بالخادم.";
-      }
-    }
-  </script>
+function handleKeyPress(e) {
+  if (e.key === "Enter") sendMessage();
+}
+
+async function sendMessage() {
+  const input = document.getElementById("chatInput");
+  const text = input.value.trim();
+  if (!text) return;
+
+  appendMessage(text, "user");
+  input.value = "";
+  appendMessage("⏳ جاري معالجة السؤال...", "bot");
+
+  try {
+    const res = await fetch("/api/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: text })
+    });
+
+    const data = await res.json();
+    document.querySelectorAll(".bot-message:last-child")[0].textContent = data.result || "❌ لا يوجد رد.";
+  } catch {
+    document.querySelectorAll(".bot-message:last-child")[0].textContent = "⚠️ حدث خطأ في الاتصال.";
+  }
+}
+
+function createStars() {
+  const starsContainer = document.querySelector(".stars");
+  for (let i = 0; i < 50; i++) {
+    let star = document.createElement("span");
+    star.style.left = Math.random() * 100 + "vw";
+    star.style.animationDuration = Math.random() * 4 + 3 + "s";
+    starsContainer.appendChild(star);
+  }
+}
+createStars();
+</script>
+
 </body>
 </html>
