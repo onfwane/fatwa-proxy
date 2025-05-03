@@ -12,7 +12,7 @@ export default async function handler(req, res) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "mistralai/mistral-nemo:free",
+        model: "openchat/openchat-3.5-1210",
         messages: [
           {
             role: "system",
