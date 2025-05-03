@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "qwen/qwen3-0.6b-04-28:free", // نموذج جيد ومجاني ويدعم العربية
+        model: "microsoft/phi-4-reasoning-plus:free", // نموذج جيد ومجاني ويدعم العربية
         messages
       })
     });
