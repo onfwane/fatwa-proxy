@@ -12,7 +12,7 @@ export default async function handler(req, res) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "microsoft/phi-4-reasoning-plus:free",
+        model: "qwen/qwen3-0.6b-04-28:free",
 
         messages: [
           {
