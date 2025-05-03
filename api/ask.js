@@ -2,7 +2,7 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).send("Only POST allowed");
 
   const { question } = req.body;
-  const API_KEY = "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";
+  const API_KEY = "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";
 
   try {
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
