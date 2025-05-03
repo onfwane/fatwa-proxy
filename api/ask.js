@@ -13,12 +13,12 @@ export default async function handler(req, res) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "microsoft/phi-4-reasoning-plus:free",
+        model: "opengvlab/internvl3-14b:free",
         messages: [
           {
             role: "system",
             content:
-              "أجب عن الأسئلة الشرعية بدقة وفق القرآن والسنة وآراء العلماء الموثوقين باللغة العربية الفصحى فقط."
+              "أجب عن الأسئلة الشرعية بدقة وفق القرآن والسنة وآراء العلماء الموثوقين باللغة العربية الفصحى فقط. ولا تزيد الرد على 100 توكن"
           },
           {
             role: "user",
