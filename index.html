@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <title>مساعد الفتاوى الذكي</title>
+</head>
+<body>
+  <h2>مساعد الفتاوى الذكي - مجاني بالكامل</h2>
+  <textarea id="question" placeholder="اكتب سؤالك الشرعي هنا..."></textarea><br>
+  <button onclick="askFatwa()">استفسر الآن</button>
+  <pre id="response">...الرد سيظهر هنا</pre>
+
+  <script>
+    async function askFatwa() {
+      const input = document.getElementById("question").value;
+      const responseBox = document.getElementById("response");
+      responseBox.innerText = "...جاري إرسال السؤال";
+
+      try {
+        const res = await fetch("https://fatwa-proxy.vercel.app/api/ask", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ question: input })
+        });
+
+        const data = await res.json();
+        responseBox.innerText = data.result || "لم يتم الحصول على رد مناسب.";
+      } catch (err) {
+        responseBox.innerText = "حدث خطأ أثناء الاتصال بالخادم.";
+      }
+    }
+  </script>
+</body>
+</html>
