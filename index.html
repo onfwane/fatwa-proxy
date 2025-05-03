@@ -17,24 +17,12 @@
       responseBox.innerText = "...جاري إرسال السؤال";
 
       try {
-        const res = await fetch("https://fatwa-proxy.vercel.app/api/ask", {
+        const res = await fetch("/api/ask", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({
-            model: "mistralai/mistral-nemo:free",
-            messages: [
-              {
-                role: "system",
-                content: "أجب عن الأسئلة الشرعية وفقاً للقرآن والسنة وآراء العلماء المعتبرين بدقة وموضوعية."
-              },
-              {
-                role: "user",
-                content: input
-              }
-            ]
-          })
+          body: JSON.stringify({ question: input })
         });
 
         const data = await res.json();
