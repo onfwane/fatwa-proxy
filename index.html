@@ -22,11 +22,16 @@
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ question: input })
+          body: JSON.stringify({
+            messages: [
+              { role: "system", content: "أجب عن الأسئلة الشرعية وفقًا للقرآن والسنة وآراء العلماء المعتبرين." },
+              { role: "user", content: input }
+            ]
+          })
         });
 
         const data = await res.json();
-        responseBox.innerText = data.result || "لم يتم الحصول على رد مناسب.";
+        responseBox.innerText = data.result;
       } catch (err) {
         responseBox.innerText = "حدث خطأ أثناء الاتصال بالخادم.";
       }
