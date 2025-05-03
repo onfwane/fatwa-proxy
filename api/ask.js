@@ -14,9 +14,16 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: "mistralai/mistral-nemo:free",
         messages: [
-          { role: "system", content: "أجب عن الأسئلة الشرعية بدقة، استنادًا للقرآن والسنة وآراء العلماء المعتبرين." },
-          { role: "user", content: question }
-        ]
+  {
+    role: "system",
+    content: "أنت مساعد شرعي ذكي. أجب على الأسئلة الشرعية فقط باللغة العربية الفصحى، بدقة وموضوعية، استنادًا للقرآن الكريم والسنة النبوية وآراء العلماء الموثوقين. تجنب أي لغة أو رموز غير عربية."
+  },
+  {
+    role: "user",
+    content: question
+  }
+]
+
       })
     });
 
