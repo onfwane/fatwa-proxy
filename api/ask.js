@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         messages: [
           {
             role: "system",
-            content: " تحدث بالعربية فقط في الرد لا تحدث الا بالعربية"
+            content: "  , تحدث بالعربية فقط في الرد لا تحدث الا بالعربية بدون رد بالانجلزيية, عند السؤال عن من انت او ما اسمك قل انا وسام"
           },
           {
             role: "user",
