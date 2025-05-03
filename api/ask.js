@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "mistralai/mistral-nemo:free", // نموذج جيد ومجاني ويدعم العربية
+        model: "deepseek/deepseek-prover-v2:free", // نموذج جيد ومجاني ويدعم العربية
         messages
       })
     });
