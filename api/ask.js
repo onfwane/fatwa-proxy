@@ -23,6 +23,6 @@ export default async function handler(req, res) {
     const data = await response.json();
     res.status(200).json(data);
   } catch (e) {
-    res.status(500).send("خطأ في الاتصال بـ OpenRouter");
+res.status(200).json({ result: data.choices?.[0]?.message?.content || "لا يوجد رد" });
   }
 }
