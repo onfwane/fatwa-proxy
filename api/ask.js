@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "qwen/qwen1.5-0.5b-chat:free", // نموذج جيد ومجاني ويدعم العربية
+        model: "openai/gpt-4.1", // نموذج جيد ومجاني ويدعم العربية
         messages
       })
     });
